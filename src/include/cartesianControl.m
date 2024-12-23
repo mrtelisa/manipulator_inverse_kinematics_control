@@ -37,14 +37,12 @@ classdef cartesianControl < handle
 
             tRg = tRb * bTg(1:3, 1:3);
             
-
-            %TODO: check if we need to use ypr or angle axis
             be = zeros(6, 1);
             [h, theta] = RotToAngleAxis(tRg);
 
-            trho = h * theta;
+            trho = transpose(h * theta);
 
-            be(1:3) = bRt * transpose(trho);
+            be(1:3) = bRt * trho;
             be(4:6) = bTg(1:3, 4) - bTt (1:3, 4);
 
             x_dot = lambda * be;
